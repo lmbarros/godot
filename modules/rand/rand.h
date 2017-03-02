@@ -45,6 +45,11 @@
 // This class is stateless by design. We don't want our subclasses (which
 // contain the "real" implementations of random number generators) to inherit
 // "useless" state).
+//
+// TODO: Using the standard generator here is probably a bad idea. Either I
+// should made this base class not instantiable (the better alternative, not
+// sure if I can do this in Godot), or make it return something useless, like a
+// constant value.
 class Rand: public Reference {
     GDCLASS(Rand,Reference);
 
