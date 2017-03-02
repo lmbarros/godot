@@ -50,3 +50,5 @@ void RandKnuthLCG::_bind_methods() {
 RandKnuthLCG::~RandKnuthLCG() {
     // Nothing here.
 }
+
+// TODO: Add tests!

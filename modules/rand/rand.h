@@ -62,7 +62,11 @@ protected:
     virtual void seed(uint64_t seed);
 
 public:
+    // TODO: Think a little better about this interface.
     double uniform_float(double p_min, double p_max);
+
+    // TODO: Add more distributions.
+
     virtual ~Rand();
 };
 

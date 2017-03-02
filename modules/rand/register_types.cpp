@@ -36,6 +36,7 @@
 void register_rand_types() {
     ClassDB::register_class<Rand>();
     ClassDB::register_class<RandKnuthLCG>();
+    // TODO: Add more RNG algorithms.
 }
 
 void unregister_rand_types() {
