@@ -26,26 +26,28 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-#ifndef RAND_H
-#define RAND_H
 
-// #include "core/reference.h"
-//
-// class Rand: public Reference {
-//     GDCLASS(Rand,Reference);
-//
-//     //uint64 state[2];
-//
-// protected:
-//     static void _bind_methods();
-//
-// public:
-//     int get_rand();
-//     // void add(int value);
-//     // void reset();
-//     // int get_total() const;
-//
-//     Rand();
-// };
+#ifndef RAND_KNUTH_LCG_H
+#define RAND_KNUTH_LCG_H
 
-#endif // RAND_H
+#include "rand.h"
+
+class RandKnuthLCG: public Rand {
+    GDCLASS(RandKnuthLCG,Rand);
+
+    uint64_t state;
+
+protected:
+    static void _bind_methods();
+
+    virtual uint64_t get_uint64();
+
+    virtual uint64_t get_max();
+
+    virtual void seed(uint64_t seed);
+
+public:
+    virtual ~RandKnuthLCG();
+};
+
+#endif // RAND_KNUTH_LCG_H

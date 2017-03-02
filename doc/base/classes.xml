@@ -31646,6 +31646,37 @@
 	<constants>
 	</constants>
 </class>
+<class name="Rand" inherits="Reference" category="Core">
+	<brief_description>
+		Base class for random number generators.
+	</brief_description>
+	<description>
+		This class uses Godot's standard random number generator (using its "global" state) to generate random numbers.
+		While technically you can instantiate this class, you probably want to use of its subclasses instead. The subclasses are guaranteed to use a certain algorithm, while Godot's standard random number generator can change from one release to another). Furthermore, the subclasses maintain their own state, so that you can create multiple instances of the random generator to generate independent sequences of numbers.
+	</description>
+	<methods>
+		<method name="uniform_float">
+			<return type="float">
+			</return>
+			<argument index="0" name="min" type="float">
+			<argument index="1" name="max" type="float">
+			</argument>
+			<description>
+				Returns random a floating point number from a uniform distribution, in the the half-open interval [min, max).
+			</description>
+		</method>
+	</methods>
+</class>
+<class name="RandKnuthLCG" inherits="Rand" category="Core">
+	<brief_description>
+		A Linear Congruential Generator (LCG) with constants recommended by Don Knuth.
+	</brief_description>
+	<description>
+		This is a simple Linear Congruential Generator (LCG), a type of random number generator known to have many flaws.
+		The constants used in this implementation were recommended by Don Knuth himself, but this doesn't make this generator special in any way.
+		If in doubt, stay away from this generator and use any of the other [Rand] subclasses instead.
+	</description>
+</class>
 <class name="RID" category="Built-In Types">
 	<brief_description>
 		Handle for a [Resource]'s unique ID.

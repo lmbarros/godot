@@ -27,28 +27,55 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
+#include <algorithm>
 #include "rand.h"
 #include "core/math/math_funcs.h"
 
+// ---------------------------------------------------------------------------
+// Random distributions
+// ---------------------------------------------------------------------------
+
+// Arguably, this is not the best way to generate random floats (see, for example,
+// https://readings.owlfolio.org/2007/generating-pseudorandom-floating-point-values/),
+// but it should be good enough for our ludic purposes. No need to complicate
+// things any further.
+double Rand::uniform_float(double p_min, double p_max) {
+
+    ERR_FAIL_COND_V(p_max < p_min, 0.0);
+
+    const uint64_t rng_max = get_max();
+
+    // This skews the distribution a very tiny little bit, but allows us to
+    // generate a nice half-open interval without having to call `get_uint64()`
+    // multiple times.
+    const uint64_t n = std::min(get_uint64(), rng_max - 1);
+
+    // Map the integer value to the desired floating point range
+    return (static_cast<double>(n) / rng_max) * (p_max - p_min) + p_min;
+}
+
+
+// ---------------------------------------------------------------------------
+// Generate random numbers uing Godot's standard random number generator
+// ---------------------------------------------------------------------------
 uint64_t Rand::get_uint64() {
     return Math::rand();
-
 }
 
 uint64_t Rand::get_max() {
     return Math::RANDOM_MAX;
 }
 
-
-double Rand::get_float() {
-    return get_uint64() / static_cast<double>(get_max());
+void Rand::seed(uint64_t seed) {
+    Math::seed(seed);
 }
 
 
+// ---------------------------------------------------------------------------
+// Misc stuff
+// ---------------------------------------------------------------------------
 void Rand::_bind_methods() {
-    ClassDB::bind_method("get_float",&Rand::get_float);
+    ClassDB::bind_method(D_METHOD("uniform_float", "min", "max"), &Rand::uniform_float, DEFVAL(0.0), DEFVAL(1.0));
 }
 
-Rand::~Rand() {
-    // nothing!
-}
+Rand::~Rand() { }

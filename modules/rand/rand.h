@@ -31,21 +31,38 @@
 
 #include "core/reference.h"
 
+
+// This is the base class for all random number generators in the Rand module.
+// Its main purposes are to (1) define a common interface for all random number
+// generators, and (2) provide the common code to generate random numbers
+// according to different distributions.
+//
+// For convenience, this class can be instantiated and used to generate random
+// numbers (it will use Godot's standard random number generator, using its
+// "global" state). However, you'll get most of this module by using one of
+// Rand's subclasses.
+//
+// This class is stateless by design. We don't want our subclasses (which
+// contain the "real" implementations of random number generators) to inherit
+// "useless" state).
 class Rand: public Reference {
     GDCLASS(Rand,Reference);
 
 protected:
     static void _bind_methods();
-    // virtual uint64_t get_uint64() = 0;
-    // virtual uint64_t get_max() = 0;
+
+    // Returns the next random number in the sequence. It must be a number
+    // between zero and `get_max()`.
     virtual uint64_t get_uint64();
+
+    // Returns the highest value `get_uint64()` will ever return.
     virtual uint64_t get_max();
-    // void add(int value);
-    // void reset();
-    // int get_total() const;
+
+    // Seeds the random number generator.
+    virtual void seed(uint64_t seed);
 
 public:
-    double get_float();
+    double uniform_float(double p_min, double p_max);
     virtual ~Rand();
 };
 

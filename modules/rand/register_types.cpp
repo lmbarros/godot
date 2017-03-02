@@ -30,15 +30,14 @@
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 #include "register_types.h"
-//#include "class_db.h"
-//#include "object_type_db.h"
-//#include ""
 #include "rand.h"
+#include "knuth_lcg.h"
 
 void register_rand_types() {
     ClassDB::register_class<Rand>();
+    ClassDB::register_class<RandKnuthLCG>();
 }
 
 void unregister_rand_types() {
-    // TODO: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // Nothing here
 }
