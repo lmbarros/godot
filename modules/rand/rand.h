@@ -43,11 +43,11 @@ protected:
     static void _bind_methods();
 
     // Returns the next random number in the sequence. It must be a number
-    // between zero and `get_max()`.
-    virtual uint64_t get_uint64() = 0;
+    // between zero and `max_random()`.
+    virtual uint64_t next_random() = 0;
 
     // Returns the highest value `get_uint64()` will ever return.
-    virtual uint64_t get_max() = 0;
+    virtual uint64_t max_random() = 0;
 
 public:
     // Seeds the random number generator.
