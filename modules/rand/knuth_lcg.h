@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  rand.h                                                               */
+/*  knuth_lcg.h                                                          */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -33,7 +33,7 @@
 #include "rand.h"
 
 class RandKnuthLCG: public Rand {
-    GDCLASS(RandKnuthLCG,Rand);
+    GDCLASS(RandKnuthLCG, Rand);
 
     uint64_t state;
 

@@ -30,10 +30,18 @@
 #include <algorithm>
 #include "rand.h"
 #include "core/math/math_funcs.h"
+#include "core/os/os.h"
 
-// ---------------------------------------------------------------------------
-// Random distributions
-// ---------------------------------------------------------------------------
+
+// Including the address of the RNG in the seed makes sure that different RNGs
+// get different seeds even in the unlikely event of they being seeded at the
+// same time. Regardless of that, for systems with address space layout
+// randomization (ASLR), `this` is also a good source of entropy.
+void Rand::randomize() {
+	seed(OS::get_singleton()->get_ticks_usec()
+        ^ reinterpret_cast<uint64_t>(this));
+}
+
 
 // Arguably, this is not the best way to generate random floats (see, for example,
 // https://readings.owlfolio.org/2007/generating-pseudorandom-floating-point-values/),
@@ -55,27 +63,10 @@ double Rand::uniform_float(double p_min, double p_max) {
 }
 
 
-// ---------------------------------------------------------------------------
-// Generate random numbers uing Godot's standard random number generator
-// ---------------------------------------------------------------------------
-uint64_t Rand::get_uint64() {
-    return Math::rand();
-}
-
-uint64_t Rand::get_max() {
-    return Math::RANDOM_MAX;
-}
-
-void Rand::seed(uint64_t seed) {
-    Math::seed(seed);
-}
-
-
-// ---------------------------------------------------------------------------
-// Misc stuff
-// ---------------------------------------------------------------------------
 void Rand::_bind_methods() {
+    ClassDB::bind_method("randomize", &Rand::randomize);
     ClassDB::bind_method(D_METHOD("uniform_float", "min", "max"), &Rand::uniform_float, DEFVAL(0.0), DEFVAL(1.0));
 }
+
 
 Rand::~Rand() { }

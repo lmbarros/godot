@@ -31651,8 +31651,7 @@
 		Base class for random number generators.
 	</brief_description>
 	<description>
-		This class uses Godot's standard random number generator (using its "global" state) to generate random numbers.
-		While technically you can instantiate this class, you probably want to use of its subclasses instead. The subclasses are guaranteed to use a certain algorithm, while Godot's standard random number generator can change from one release to another). Furthermore, the subclasses maintain their own state, so that you can create multiple instances of the random generator to generate independent sequences of numbers.
+		This is the base class for random number generators. It cannot be instantiated: one of its subclasses instead.
 	</description>
 	<methods>
 		<method name="uniform_float">
