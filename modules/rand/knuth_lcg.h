@@ -33,21 +33,21 @@
 #include "rand.h"
 
 class RandKnuthLCG: public Rand {
-    GDCLASS(RandKnuthLCG, Rand);
+	GDCLASS(RandKnuthLCG, Rand);
 
-    uint64_t state;
+	uint64_t state;
 
 protected:
-    static void _bind_methods();
+	static void _bind_methods();
 
-    virtual uint64_t next_random();
+	virtual uint64_t next_random();
 
-    virtual uint64_t max_random();
+	virtual uint64_t max_random();
 
-    virtual void seed(uint64_t seed);
+	virtual void seed(uint64_t seed);
 
 public:
-    virtual ~RandKnuthLCG();
+	virtual ~RandKnuthLCG();
 };
 
 #endif // RAND_KNUTH_LCG_H

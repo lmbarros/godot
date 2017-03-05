@@ -31,24 +31,24 @@
 #include "knuth_lcg.h"
 
 uint64_t RandKnuthLCG::next_random() {
-    state = 6364136223846793005 * state + 1442695040888963407;
-    return state;
+	state = 6364136223846793005 * state + 1442695040888963407;
+	return state;
 }
 
 uint64_t RandKnuthLCG::max_random() {
-    return std::numeric_limits<uint64_t>::max();
+	return std::numeric_limits<uint64_t>::max();
 }
 
 void RandKnuthLCG::seed(uint64_t seed) {
-    state = seed;
+	state = seed;
 }
 
 void RandKnuthLCG::_bind_methods() {
-    // All exported methods are declared in the superclass.
+	// All exported methods are declared in the superclass.
 }
 
 RandKnuthLCG::~RandKnuthLCG() {
-    // Nothing here.
+	// Nothing here.
 }
 
 // TODO: Add tests!

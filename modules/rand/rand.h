@@ -37,31 +37,31 @@
 // generators, and (2) provide the common code to generate random numbers
 // according to different distributions.
 class Rand: public Reference {
-    GDCLASS(Rand, Reference);
+	GDCLASS(Rand, Reference);
 
 protected:
-    static void _bind_methods();
+	static void _bind_methods();
 
-    // Returns the next random number in the sequence. It must be a number
-    // between zero and `max_random()`.
-    virtual uint64_t next_random() = 0;
+	// Returns the next random number in the sequence. It must be a number
+	// between zero and `max_random()`.
+	virtual uint64_t next_random() = 0;
 
-    // Returns the highest value `get_uint64()` will ever return.
-    virtual uint64_t max_random() = 0;
+	// Returns the highest value `get_uint64()` will ever return.
+	virtual uint64_t max_random() = 0;
 
 public:
-    // Seeds the random number generator.
-    virtual void seed(uint64_t seed) = 0;
+	// Seeds the random number generator.
+	virtual void seed(uint64_t seed) = 0;
 
-    // Seeds the RNG with some "unpredictable" value.
-    void randomize();
+	// Seeds the RNG with some "unpredictable" value.
+	void randomize();
 
-    // TODO: Think a little better about this interface.
-    double uniform_float(double p_min, double p_max);
+	// TODO: Think a little better about this interface.
+	double uniform_float(double p_min, double p_max);
 
-    // TODO: Add more distributions.
+	// TODO: Add more distributions.
 
-    virtual ~Rand();
+	virtual ~Rand();
 };
 
 #endif // RAND_H

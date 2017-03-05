@@ -30,12 +30,12 @@
 #include "register_types.h"
 #include "rand.h"
 #include "knuth_lcg.h"
+#include "pcg32.h"
 
 void register_rand_types() {
-    ClassDB::register_class<RandKnuthLCG>();
-    // TODO: Add more RNG algorithms.
-
+	ClassDB::register_class<RandKnuthLCG>();
+	ClassDB::register_class<RandPCG32>();
 }
 void unregister_rand_types() {
-    // Nothing here
+	// Nothing here
 }
