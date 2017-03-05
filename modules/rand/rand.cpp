@@ -51,12 +51,12 @@ double Rand::uniform_float(double p_min, double p_max) {
 
 	ERR_FAIL_COND_V(p_max < p_min, 0.0);
 
-	const uint64_t rng_max = max_random();
+	const uint64_t rng_max = max();
 
 	// This skews the distribution a very tiny little bit, but allows us to
 	// generate a nice half-open interval without having to call `get_uint64()`
 	// multiple times.
-	const uint64_t n = std::min(next_random(), rng_max - 1);
+	const uint64_t n = std::min(random(), rng_max - 1);
 
 	// Map the integer value to the desired floating point range
 	return (static_cast<double>(n) / rng_max) * (p_max - p_min) + p_min;
@@ -64,7 +64,12 @@ double Rand::uniform_float(double p_min, double p_max) {
 
 
 void Rand::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("seed", "seed"), &Rand::seed);
 	ClassDB::bind_method("randomize", &Rand::randomize);
+
+	ClassDB::bind_method("random", &Rand::random);
+	ClassDB::bind_method("max", &Rand::max);
+
 	ClassDB::bind_method(D_METHOD("uniform_float", "min", "max"), &Rand::uniform_float, DEFVAL(0.0), DEFVAL(1.0));
 }
 

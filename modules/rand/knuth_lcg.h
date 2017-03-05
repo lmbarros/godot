@@ -40,11 +40,11 @@ class RandKnuthLCG: public Rand {
 protected:
 	static void _bind_methods();
 
-	virtual uint64_t next_random();
+	virtual uint64_t random();
 
-	virtual uint64_t max_random();
+	virtual uint64_t max();
 
-	virtual void seed(uint64_t seed);
+	virtual void seed(uint64_t p_seed);
 
 public:
 	virtual ~RandKnuthLCG();

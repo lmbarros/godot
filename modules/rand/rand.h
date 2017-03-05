@@ -42,14 +42,14 @@ class Rand: public Reference {
 protected:
 	static void _bind_methods();
 
-	// Returns the next random number in the sequence. It must be a number
-	// between zero and `max_random()`.
-	virtual uint64_t next_random() = 0;
-
-	// Returns the highest value `get_uint64()` will ever return.
-	virtual uint64_t max_random() = 0;
-
 public:
+	// Returns the next random number in the sequence. It must be a number
+	// between zero and `max()`.
+	virtual uint64_t random() = 0;
+
+	// Returns the highest value `random()` will ever return.
+	virtual uint64_t max() = 0;
+
 	// Seeds the random number generator.
 	virtual void seed(uint64_t seed) = 0;
 
