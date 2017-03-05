@@ -30,6 +30,16 @@
 #include <limits>
 #include "mt19937_64.h"
 
+// This implementation is based on the implemention from the Boost Libraries
+// 1.63.0. This is the copyright information for the original Boost code:
+//
+// Copyright Jens Maurer 2000-2001
+// Copyright Steven Watanabe 2010
+//
+// Distributed under the Boost Software License, Version 1.0. (See
+// http://www.boost.org/LICENSE_1_0.txt)
+
+
 uint64_t RandMT19937_64::random() {
 	if(i == n)
 		twist();
