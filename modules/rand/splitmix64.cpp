@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  register_types.cpp                                                   */
+/*  splitmix64.cpp                                                       */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,17 +27,37 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "register_types.h"
-#include "rand.h"
-#include "knuth_lcg.h"
-#include "pcg32.h"
+#include <limits>
 #include "splitmix64.h"
 
-void register_rand_types() {
-	ClassDB::register_class<RandKnuthLCG>();
-	ClassDB::register_class<RandPCG32>();
-	ClassDB::register_class<RandSplitMix64>();
+// This is just an adaptation of the public domain code by Sebastiano Vigna,
+// available at http://xoroshiro.di.unimi.it/splitmix64.c.
+
+uint64_t RandSplitMix64::random() {
+	state += 0x9E3779B97F4A7C15;
+	uint64_t z = state;
+	z = (z ^ (z >> 30)) * 0xBF58476D1CE4E5B9;
+	z = (z ^ (z >> 27)) * 0x94D049BB133111EB;
+	return z ^ (z >> 31);
 }
-void unregister_rand_types() {
-	// Nothing here
+
+uint64_t RandSplitMix64::max_random() {
+	return std::numeric_limits<uint64_t>::max();
+}
+
+void RandSplitMix64::seed(uint64_t p_seed) {
+	state = p_seed;
+}
+
+void RandSplitMix64::_bind_methods() {
+	// All exported methods are declared in the superclass.
+}
+
+RandSplitMix64::RandSplitMix64()
+	: state(0x7A3B10CF23) {
+	// Nothing here.
+}
+
+RandSplitMix64::~RandSplitMix64() {
+	// Nothing here.
 }

@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  register_types.cpp                                                   */
+/*  splitmix64.h                                                         */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,17 +27,28 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "register_types.h"
-#include "rand.h"
-#include "knuth_lcg.h"
-#include "pcg32.h"
-#include "splitmix64.h"
+#ifndef RAND_SPLITMIX64_H
+#define RAND_SPLITMIX64_H
 
-void register_rand_types() {
-	ClassDB::register_class<RandKnuthLCG>();
-	ClassDB::register_class<RandPCG32>();
-	ClassDB::register_class<RandSplitMix64>();
-}
-void unregister_rand_types() {
-	// Nothing here
-}
+#include "rand.h"
+
+class RandSplitMix64: public Rand {
+	GDCLASS(RandSplitMix64, Rand);
+
+	uint64_t state;
+
+protected:
+	static void _bind_methods();
+
+	virtual uint64_t random();
+
+	virtual uint64_t max_random();
+
+	virtual void seed(uint64_t p_seed);
+
+public:
+	RandSplitMix64();
+	virtual ~RandSplitMix64();
+};
+
+#endif // RAND_SPLITMIX64_H
