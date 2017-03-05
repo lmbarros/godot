@@ -40,15 +40,16 @@ class RandSplitMix64: public Rand {
 protected:
 	static void _bind_methods();
 
+public:
+	RandSplitMix64();
+
+	virtual ~RandSplitMix64();
+
 	virtual uint64_t random();
 
 	virtual uint64_t max_random();
 
 	virtual void seed(uint64_t p_seed);
-
-public:
-	RandSplitMix64();
-	virtual ~RandSplitMix64();
 };
 
 #endif // RAND_SPLITMIX64_H

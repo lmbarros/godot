@@ -44,15 +44,16 @@ class RandPCG32: public Rand {
 protected:
 	static void _bind_methods();
 
+public:
+	RandPCG32();
+
+	virtual ~RandPCG32();
+
 	virtual uint64_t random();
 
 	virtual uint64_t max_random();
 
 	virtual void seed(uint64_t seed);
-
-public:
-	RandPCG32();
-	virtual ~RandPCG32();
 };
 
 #endif // RAND_PCG32_H
