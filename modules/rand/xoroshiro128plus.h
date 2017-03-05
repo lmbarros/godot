@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  register_types.cpp                                                   */
+/*  xoroshiro128plus.h                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,20 +27,27 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "register_types.h"
+#ifndef RAND_XOROSHIRO128_PLUS_H
+#define RAND_XOROSHIRO128_PLUS_H
+
 #include "rand.h"
-#include "knuth_lcg.h"
-#include "pcg32.h"
-#include "splitmix64.h"
-#include "xoroshiro128plus.h"
 
-void register_rand_types() {
-	ClassDB::register_class<RandKnuthLCG>();
-	ClassDB::register_class<RandPCG32>();
-	ClassDB::register_class<RandSplitMix64>();
-	ClassDB::register_class<RandXoroshiro128Plus>();
-}
+class RandXoroshiro128Plus: public Rand {
+	GDCLASS(RandXoroshiro128Plus, Rand);
 
-void unregister_rand_types() {
-	// Nothing here
-}
+	uint64_t state[2];
+
+protected:
+	static void _bind_methods();
+
+public:
+	virtual ~RandXoroshiro128Plus();
+
+	virtual uint64_t random();
+
+	virtual uint64_t max_random();
+
+	virtual void seed(uint64_t p_seed);
+};
+
+#endif // RAND_XOROSHIRO128_PLUS_H

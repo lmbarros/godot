@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  register_types.cpp                                                   */
+/*  xoroshiro128plus.cpp                                                 */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,20 +27,43 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "register_types.h"
-#include "rand.h"
-#include "knuth_lcg.h"
-#include "pcg32.h"
-#include "splitmix64.h"
+#include <limits>
 #include "xoroshiro128plus.h"
+#include "splitmix64.h"
 
-void register_rand_types() {
-	ClassDB::register_class<RandKnuthLCG>();
-	ClassDB::register_class<RandPCG32>();
-	ClassDB::register_class<RandSplitMix64>();
-	ClassDB::register_class<RandXoroshiro128Plus>();
+namespace {
+	// Rotates x left by k bits.
+	uint64_t rotl(uint64_t x, unsigned k ) {
+		return (x << k) | (x >> (64 - k));
+	}
 }
 
-void unregister_rand_types() {
-	// Nothing here
+uint64_t RandXoroshiro128Plus::random() {
+	uint64_t result = state[0] + state[1];
+
+	state[1] ^= state[0];
+	state[0] = rotl(state[0], 55) ^ state[1] ^ (state[1] << 14);
+	state[1] = rotl(state[1], 36);
+
+	return result;
+}
+
+uint64_t RandXoroshiro128Plus::max_random() {
+	return std::numeric_limits<uint64_t>::max();
+}
+
+void RandXoroshiro128Plus::seed(uint64_t p_seed) {
+	// Use a SplitMix64 RNG to generate two seed values from `p_seed`
+	RandSplitMix64 rng;
+	rng.seed(p_seed);
+	state[0] = rng.random();
+	state[1] = rng.random();
+}
+
+void RandXoroshiro128Plus::_bind_methods() {
+	// All exported methods are declared in the superclass.
+}
+
+RandXoroshiro128Plus::~RandXoroshiro128Plus() {
+	// Nothing here.
 }
