@@ -31,6 +31,11 @@
 #include "xoroshiro128plus.h"
 #include "splitmix64.h"
 
+// This code is derivative of the public domain C code by David Blackman and
+// Sebastiano Vigna, available at
+// http://xoroshiro.di.unimi.it/xoroshiro128plus.c.
+
+
 namespace {
 	// Rotates x left by k bits.
 	uint64_t rotl(uint64_t x, unsigned k ) {
