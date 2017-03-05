@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  register_types.cpp                                                   */
+/*  mt19937.h                                                            */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,24 +27,44 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "register_types.h"
+#ifndef RAND_MT19937_H
+#define RAND_MT19937_H
+
 #include "rand.h"
-#include "knuth_lcg.h"
-#include "mt19937.h"
-#include "mt19937_64.h"
-#include "pcg32.h"
-#include "splitmix64.h"
-#include "xoroshiro128plus.h"
 
-void register_rand_types() {
-	ClassDB::register_class<RandKnuthLCG>();
-	ClassDB::register_class<RandMT19937>();
-	ClassDB::register_class<RandMT19937_64>();
-	ClassDB::register_class<RandPCG32>();
-	ClassDB::register_class<RandSplitMix64>();
-	ClassDB::register_class<RandXoroshiro128Plus>();
-}
+class RandMT19937: public Rand {
+	GDCLASS(RandMT19937, Rand);
 
-void unregister_rand_types() {
-	// Nothing here
-}
+	static const uint32_t w = 32;
+	static const uint32_t n = 624;
+	static const uint32_t m = 397;
+	static const uint32_t r = 31;
+	static const uint32_t a = 0X9908B0DF;
+	static const uint32_t u = 11;
+	static const uint32_t d = 0XFFFFFFFF;
+	static const uint32_t s = 7;
+	static const uint32_t b = 0X9D2C5680;
+	static const uint32_t t = 15;
+	static const uint32_t c = 0XEFC60000;
+	static const uint32_t l = 18;
+	static const uint32_t f = 1812433253;
+
+	void twist();
+
+	uint32_t x[n]; // the state itself
+	uint32_t i;      // index into `x`
+
+protected:
+	static void _bind_methods();
+
+public:
+	virtual uint64_t random();
+
+	virtual uint64_t max_random();
+
+	virtual void seed(uint64_t p_seed);
+
+	virtual ~RandMT19937();
+};
+
+#endif // RAND_MT19937_H
