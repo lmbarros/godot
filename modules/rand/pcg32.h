@@ -46,7 +46,7 @@ protected:
 
 	virtual uint64_t random();
 
-	virtual uint64_t max();
+	virtual uint64_t max_random();
 
 	virtual void seed(uint64_t seed);
 

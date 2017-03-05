@@ -44,11 +44,11 @@ protected:
 
 public:
 	// Returns the next random number in the sequence. It must be a number
-	// between zero and `max()`.
+	// between zero and `max_random()`.
 	virtual uint64_t random() = 0;
 
 	// Returns the highest value `random()` will ever return.
-	virtual uint64_t max() = 0;
+	virtual uint64_t max_random() = 0;
 
 	// Seeds the random number generator.
 	virtual void seed(uint64_t seed) = 0;

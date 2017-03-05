@@ -35,7 +35,7 @@ uint64_t RandKnuthLCG::random() {
 	return state;
 }
 
-uint64_t RandKnuthLCG::max() {
+uint64_t RandKnuthLCG::max_random() {
 	return std::numeric_limits<uint64_t>::max();
 }
 
