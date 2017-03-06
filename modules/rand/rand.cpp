@@ -88,6 +88,11 @@ int64_t Rand::uniform_int(int64_t p_a, int64_t p_b) {
 }
 
 
+bool Rand::boolean(double p_p) {
+	return static_cast<double>(random()) < static_cast<double>(max_random()) * p_p;
+}
+
+
 void Rand::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("seed", "seed"), &Rand::seed);
 	ClassDB::bind_method("randomize", &Rand::randomize);
@@ -97,6 +102,7 @@ void Rand::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("uniform_float", "a", "b"), &Rand::uniform_float, DEFVAL(NAN), DEFVAL(NAN));
 	ClassDB::bind_method(D_METHOD("uniform_int", "a", "b"), &Rand::uniform_int);
+	ClassDB::bind_method(D_METHOD("boolean", "p"), &Rand::boolean);
 }
 
 

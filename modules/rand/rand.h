@@ -63,11 +63,15 @@ public:
 	// Generates floating point numbers between `p_a` and `p_b` (closed interval
 	// at both ends). Defaults to [0,1]. If only `p_a` is passed, the interval
 	// used is [0, p_a].
-	double uniform_float(double p_a, double p_b);
+	double uniform_float(double p_a = NAN, double p_b = NAN);
 
 	// Generates integer numbers between `p_a` and `p_b` (closed interval
 	// at both ends).
 	int64_t uniform_int(int64_t p_a, int64_t p_b);
+
+	// Generates a Boolean with a probability `p_p` of being true (AKA Bernoulli
+	// distribution). Defaults to 0.5 (a fair coin toss).
+	bool boolean(double p_p = 0.5);
 
 	virtual ~Rand();
 };
