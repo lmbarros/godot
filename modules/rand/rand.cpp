@@ -47,19 +47,44 @@ void Rand::randomize() {
 // https://readings.owlfolio.org/2007/generating-pseudorandom-floating-point-values/),
 // but it should be good enough for our ludic purposes. No need to complicate
 // things any further.
-double Rand::uniform_float(double p_min, double p_max) {
+double Rand::uniform_float(double p_a, double p_b) {
 
-	ERR_FAIL_COND_V(p_max < p_min, 0.0);
+	if (isnan(p_b)) {
+		if (isnan(p_a)) {
+			p_a = 0.0;
+			p_b = 1.0;
+		}
+		else {
+			p_b = p_a;
+			p_a = 0.0;
+		}
+	}
 
-	const uint64_t rng_max = max_random();
+	if (p_a > p_b)
+		std::swap(p_a, p_b);
 
-	// This skews the distribution a very tiny little bit, but allows us to
-	// generate a nice half-open interval without having to call `get_uint64()`
-	// multiple times.
-	const uint64_t n = std::min(random(), rng_max - 1);
+	const double range = p_b - p_a;
+	return (static_cast<double>(random()) / max_random()) * range + p_a;
+}
 
-	// Map the integer value to the desired floating point range
-	return (static_cast<double>(n) / rng_max) * (p_max - p_min) + p_min;
+
+int64_t Rand::uniform_int(int64_t p_a, int64_t p_b) {
+	if (p_a > p_b)
+		std::swap(p_a, p_b);
+
+	// The traditional way to do this, using modulo, is biased (especially for
+	// larger ranges).  We can be more uniform without much extra cost.
+
+	const uint64_t range = p_b - p_a + 1;
+	const uint64_t subranges = max_random() / range;
+	const uint64_t upper_bound = subranges * range;
+
+	uint64_t n;
+	do {
+		n = random();
+	} while (n >= upper_bound);
+
+	return p_a + (n / subranges);
 }
 
 
@@ -70,7 +95,8 @@ void Rand::_bind_methods() {
 	ClassDB::bind_method("random", &Rand::random);
 	ClassDB::bind_method("max_random", &Rand::max_random);
 
-	ClassDB::bind_method(D_METHOD("uniform_float", "min", "max"), &Rand::uniform_float, DEFVAL(0.0), DEFVAL(1.0));
+	ClassDB::bind_method(D_METHOD("uniform_float", "a", "b"), &Rand::uniform_float, DEFVAL(NAN), DEFVAL(NAN));
+	ClassDB::bind_method(D_METHOD("uniform_int", "a", "b"), &Rand::uniform_int);
 }
 
 

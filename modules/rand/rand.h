@@ -42,13 +42,13 @@ class Rand: public Reference {
 protected:
 	static void _bind_methods();
 
+	// Returns the highest value `random()` will ever return.
+	virtual uint64_t max_random() = 0;
+
 public:
 	// Returns the next random number in the sequence. It must be a number
 	// between zero and `max_random()`.
 	virtual uint64_t random() = 0;
-
-	// Returns the highest value `random()` will ever return.
-	virtual uint64_t max_random() = 0;
 
 	// Seeds the random number generator.
 	virtual void seed(uint64_t seed) = 0;
@@ -56,10 +56,18 @@ public:
 	// Seeds the RNG with some "unpredictable" value.
 	void randomize();
 
-	// TODO: Think a little better about this interface.
-	double uniform_float(double p_min, double p_max);
+	//
+	// Distributions
+	//
 
-	// TODO: Add more distributions.
+	// Generates floating point numbers between `p_a` and `p_b` (closed interval
+	// at both ends). Defaults to [0,1]. If only `p_a` is passed, the interval
+	// used is [0, p_a].
+	double uniform_float(double p_a, double p_b);
+
+	// Generates integer numbers between `p_a` and `p_b` (closed interval
+	// at both ends).
+	int64_t uniform_int(int64_t p_a, int64_t p_b);
 
 	virtual ~Rand();
 };
