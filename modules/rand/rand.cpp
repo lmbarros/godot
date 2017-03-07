@@ -44,23 +44,26 @@ void Rand::randomize() {
 }
 
 
+// The traditional way to do this, using modulo, is biased (especially for
+// larger ranges).  We can be more uniform without much extra cost. This
+// implementation is based on the one provided with the PCG family of RNGs.
+// See https://github.com/imneme/pcg-c-basic/blob/master/pcg_basic.c#L79
 int64_t Rand::uniform_int(int64_t p_a, int64_t p_b) {
 	if (p_a > p_b)
 		std::swap(p_a, p_b);
 
-	// The traditional way to do this, using modulo, is biased (especially for
-	// larger ranges).  We can be more uniform without much extra cost.
+	const uint64_t bound = p_b - p_a + 1;
 
-	const uint64_t range = p_b - p_a + 1;
-	const uint64_t subranges = max_random() / range;
-	const uint64_t upper_bound = subranges * range;
+	if (bound > max_random())
+		ERR_FAIL_V(0);
 
-	uint64_t n;
-	do {
-		n = random();
-	} while (n >= upper_bound);
+	const uint64_t threshold = -bound % bound;
 
-	return p_a + (n / subranges);
+	for (;;) {
+        uint64_t r = random();
+        if (r >= threshold)
+            return p_a + r % bound;
+	}
 }
 
 
