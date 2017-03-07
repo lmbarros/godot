@@ -44,6 +44,26 @@ void Rand::randomize() {
 }
 
 
+int64_t Rand::uniform_int(int64_t p_a, int64_t p_b) {
+	if (p_a > p_b)
+		std::swap(p_a, p_b);
+
+	// The traditional way to do this, using modulo, is biased (especially for
+	// larger ranges).  We can be more uniform without much extra cost.
+
+	const uint64_t range = p_b - p_a + 1;
+	const uint64_t subranges = max_random() / range;
+	const uint64_t upper_bound = subranges * range;
+
+	uint64_t n;
+	do {
+		n = random();
+	} while (n >= upper_bound);
+
+	return p_a + (n / subranges);
+}
+
+
 // Arguably, this is not the best way to generate random floats (see, for example,
 // https://readings.owlfolio.org/2007/generating-pseudorandom-floating-point-values/),
 // but it should be good enough for our ludic purposes. No need to complicate
@@ -69,24 +89,10 @@ double Rand::uniform_float(double p_a, double p_b) {
 }
 
 
-int64_t Rand::uniform_int(int64_t p_a, int64_t p_b) {
-	if (p_a > p_b)
-		std::swap(p_a, p_b);
-
-	// The traditional way to do this, using modulo, is biased (especially for
-	// larger ranges).  We can be more uniform without much extra cost.
-
-	const uint64_t range = p_b - p_a + 1;
-	const uint64_t subranges = max_random() / range;
-	const uint64_t upper_bound = subranges * range;
-
-	uint64_t n;
-	do {
-		n = random();
-	} while (n >= upper_bound);
-
-	return p_a + (n / subranges);
+bool Rand::boolean(double p_p) {
+	return static_cast<double>(random()) < static_cast<double>(max_random()) * p_p;
 }
+
 
 // This implements an algorithm by Peter John Acklam for computing an
 // approximation of the inverse normal cumulative distribution function. See
@@ -166,8 +172,10 @@ double Rand::normal(double p_mean, double p_std_dev) {
 	return x * p_std_dev + p_mean;
 }
 
-bool Rand::boolean(double p_p) {
-	return static_cast<double>(random()) < static_cast<double>(max_random()) * p_p;
+double Rand::exponential(double p_mean)
+{
+    const double r01 = static_cast<double>(random()) / static_cast<double>(max_random());
+    return -p_mean * log(r01);
 }
 
 
@@ -178,10 +186,11 @@ void Rand::_bind_methods() {
 	ClassDB::bind_method("random", &Rand::random);
 	ClassDB::bind_method("max_random", &Rand::max_random);
 
-	ClassDB::bind_method(D_METHOD("uniform_float", "a", "b"), &Rand::uniform_float, DEFVAL(NAN), DEFVAL(NAN));
 	ClassDB::bind_method(D_METHOD("uniform_int", "a", "b"), &Rand::uniform_int);
-	ClassDB::bind_method(D_METHOD("normal", "mean", "std_dev"), &Rand::normal, DEFVAL(0.0), DEFVAL(1.0));
+	ClassDB::bind_method(D_METHOD("uniform_float", "a", "b"), &Rand::uniform_float, DEFVAL(NAN), DEFVAL(NAN));
 	ClassDB::bind_method(D_METHOD("boolean", "p"), &Rand::boolean);
+	ClassDB::bind_method(D_METHOD("normal", "mean", "std_dev"), &Rand::normal, DEFVAL(0.0), DEFVAL(1.0));
+	ClassDB::bind_method(D_METHOD("exponential", "mean"), &Rand::exponential);
 }
 
 
