@@ -41,6 +41,8 @@ protected:
 	static void _bind_methods();
 
 public:
+	RandXoroshiro128Plus();
+
 	virtual ~RandXoroshiro128Plus();
 
 	virtual uint64_t random();

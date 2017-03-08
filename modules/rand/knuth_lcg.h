@@ -47,6 +47,7 @@ public:
 
 	virtual void seed(uint64_t p_seed);
 
+	RandKnuthLCG();
 	virtual ~RandKnuthLCG();
 };
 

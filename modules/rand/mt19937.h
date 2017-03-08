@@ -64,6 +64,7 @@ public:
 
 	virtual void seed(uint64_t p_seed);
 
+	RandMT19937();
 	virtual ~RandMT19937();
 };
 

@@ -123,6 +123,10 @@ void RandMT19937_64::_bind_methods() {
 	// All exported methods are declared in the superclass.
 }
 
+RandMT19937_64::RandMT19937_64() {
+	seed(5489); // Default seed used by Yakuji Nishimura and Makoto Matsumoto
+}
+
 RandMT19937_64::~RandMT19937_64() {
 	// Nothing here.
 }

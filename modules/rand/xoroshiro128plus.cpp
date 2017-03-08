@@ -69,6 +69,10 @@ void RandXoroshiro128Plus::_bind_methods() {
 	// All exported methods are declared in the superclass.
 }
 
+RandXoroshiro128Plus::RandXoroshiro128Plus() {
+	seed(0x537A73BC);
+}
+
 RandXoroshiro128Plus::~RandXoroshiro128Plus() {
 	// Nothing here.
 }

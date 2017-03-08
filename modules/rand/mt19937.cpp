@@ -119,9 +119,16 @@ void RandMT19937::twist() {
 	i = 0;
 }
 
+
 void RandMT19937::_bind_methods() {
 	// All exported methods are declared in the superclass.
 }
+
+
+RandMT19937::RandMT19937() {
+	seed(5489); // Default seed used by Yakuji Nishimura and Makoto Matsumoto
+}
+
 
 RandMT19937::~RandMT19937() {
 	// Nothing here.
