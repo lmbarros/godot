@@ -34,26 +34,19 @@
 
 class RandPCG32: public Rand {
 	GDCLASS(RandPCG32, Rand);
-
-	// The state itself.
-	uint64_t state;
-
-	// The selected RNG stream; must be and odd number.
-	uint64_t inc;
+public:
+	RandPCG32();
+	virtual ~RandPCG32();
+	virtual uint64_t random();
+	virtual uint64_t max_random();
+	virtual void seed(uint64_t seed);
 
 protected:
 	static void _bind_methods();
 
-public:
-	RandPCG32();
-
-	virtual ~RandPCG32();
-
-	virtual uint64_t random();
-
-	virtual uint64_t max_random();
-
-	virtual void seed(uint64_t seed);
+private:
+	uint64_t state; // The state itself
+	uint64_t inc; // The selected RNG stream; must be and odd number
 };
 
 #endif // RAND_PCG32_H

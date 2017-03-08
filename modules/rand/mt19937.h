@@ -34,7 +34,17 @@
 
 class RandMT19937: public Rand {
 	GDCLASS(RandMT19937, Rand);
+public:
+	RandMT19937();
+	virtual ~RandMT19937();
+	virtual uint64_t random();
+	virtual uint64_t max_random();
+	virtual void seed(uint64_t p_seed);
 
+protected:
+	static void _bind_methods();
+
+private:
 	static const uint32_t w = 32;
 	static const uint32_t n = 624;
 	static const uint32_t m = 397;
@@ -48,24 +58,10 @@ class RandMT19937: public Rand {
 	static const uint32_t c = 0XEFC60000;
 	static const uint32_t l = 18;
 	static const uint32_t f = 1812433253;
-
 	void twist();
-
 	uint32_t x[n]; // the state itself
-	uint32_t i;      // index into `x`
+	uint32_t i;    // index into `x`
 
-protected:
-	static void _bind_methods();
-
-public:
-	virtual uint64_t random();
-
-	virtual uint64_t max_random();
-
-	virtual void seed(uint64_t p_seed);
-
-	RandMT19937();
-	virtual ~RandMT19937();
 };
 
 #endif // RAND_MT19937_H

@@ -64,9 +64,11 @@ uint64_t RandPCG32::random() {
 	return (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
 }
 
+
 uint64_t RandPCG32::max_random() {
 	return std::numeric_limits<uint32_t>::max();
 }
+
 
 void RandPCG32::seed(uint64_t p_seed) {
 	const uint64_t seq = 0x6d1f1ce5ca5cadedULL;
@@ -77,6 +79,7 @@ void RandPCG32::seed(uint64_t p_seed) {
 	state += p_seed;
 	random();
 }
+
 
 void RandPCG32::_bind_methods() {
 	// All exported methods are declared in the superclass.

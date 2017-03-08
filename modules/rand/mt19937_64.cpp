@@ -40,6 +40,16 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 
+RandMT19937_64::RandMT19937_64() {
+	seed(5489); // Default seed used by Yakuji Nishimura and Makoto Matsumoto
+}
+
+
+RandMT19937_64::~RandMT19937_64() {
+	// Nothing here.
+}
+
+
 uint64_t RandMT19937_64::random() {
 	if(i == n)
 		twist();
@@ -54,9 +64,11 @@ uint64_t RandMT19937_64::random() {
 	return z;
 }
 
+
 uint64_t RandMT19937_64::max_random() {
 	return std::numeric_limits<uint64_t>::max();
 }
+
 
 void RandMT19937_64::seed(uint64_t p_seed) {
 	const uint64_t mask = max_random();
@@ -121,12 +133,4 @@ void RandMT19937_64::twist() {
 
 void RandMT19937_64::_bind_methods() {
 	// All exported methods are declared in the superclass.
-}
-
-RandMT19937_64::RandMT19937_64() {
-	seed(5489); // Default seed used by Yakuji Nishimura and Makoto Matsumoto
-}
-
-RandMT19937_64::~RandMT19937_64() {
-	// Nothing here.
 }

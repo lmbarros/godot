@@ -30,29 +30,33 @@
 #include <limits>
 #include "knuth_lcg.h"
 
+RandKnuthLCG::RandKnuthLCG()
+	: state(175494623) {
+		// Nothing here.
+}
+
+
+RandKnuthLCG::~RandKnuthLCG() {
+	// Nothing here.
+}
+
 
 uint64_t RandKnuthLCG::random() {
 	state = 6364136223846793005 * state + 1442695040888963407;
 	return state;
 }
 
+
 uint64_t RandKnuthLCG::max_random() {
 	return std::numeric_limits<uint64_t>::max();
 }
+
 
 void RandKnuthLCG::seed(uint64_t p_seed) {
 	state = p_seed;
 }
 
+
 void RandKnuthLCG::_bind_methods() {
 	// All exported methods are declared in the superclass.
-}
-
-RandKnuthLCG::RandKnuthLCG()
-	: state(175494623) {
-		// Nothing here.
-}
-
-RandKnuthLCG::~RandKnuthLCG() {
-	// Nothing here.
 }

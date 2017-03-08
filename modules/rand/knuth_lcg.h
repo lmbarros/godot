@@ -34,21 +34,18 @@
 
 class RandKnuthLCG: public Rand {
 	GDCLASS(RandKnuthLCG, Rand);
-
-	uint64_t state;
+public:
+	RandKnuthLCG();
+	virtual ~RandKnuthLCG();
+	virtual uint64_t random();
+	virtual uint64_t max_random();
+	virtual void seed(uint64_t p_seed);
 
 protected:
 	static void _bind_methods();
 
-public:
-	virtual uint64_t random();
-
-	virtual uint64_t max_random();
-
-	virtual void seed(uint64_t p_seed);
-
-	RandKnuthLCG();
-	virtual ~RandKnuthLCG();
+private:
+	uint64_t state;
 };
 
 #endif // RAND_KNUTH_LCG_H

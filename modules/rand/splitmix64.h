@@ -34,22 +34,18 @@
 
 class RandSplitMix64: public Rand {
 	GDCLASS(RandSplitMix64, Rand);
-
-	uint64_t state;
+public:
+	RandSplitMix64();
+	virtual ~RandSplitMix64();
+	virtual uint64_t random();
+	virtual uint64_t max_random();
+	virtual void seed(uint64_t p_seed);
 
 protected:
 	static void _bind_methods();
 
-public:
-	RandSplitMix64();
-
-	virtual ~RandSplitMix64();
-
-	virtual uint64_t random();
-
-	virtual uint64_t max_random();
-
-	virtual void seed(uint64_t p_seed);
+private:
+	uint64_t state;
 };
 
 #endif // RAND_SPLITMIX64_H

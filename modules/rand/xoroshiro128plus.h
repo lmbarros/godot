@@ -34,22 +34,18 @@
 
 class RandXoroshiro128Plus: public Rand {
 	GDCLASS(RandXoroshiro128Plus, Rand);
-
-	uint64_t state[2];
+public:
+	RandXoroshiro128Plus();
+	virtual ~RandXoroshiro128Plus();
+	virtual uint64_t random();
+	virtual uint64_t max_random();
+	virtual void seed(uint64_t p_seed);
 
 protected:
 	static void _bind_methods();
 
-public:
-	RandXoroshiro128Plus();
-
-	virtual ~RandXoroshiro128Plus();
-
-	virtual uint64_t random();
-
-	virtual uint64_t max_random();
-
-	virtual void seed(uint64_t p_seed);
+private:
+	uint64_t state[2];
 };
 
 #endif // RAND_XOROSHIRO128_PLUS_H

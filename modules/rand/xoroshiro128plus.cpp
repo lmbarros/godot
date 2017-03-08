@@ -35,13 +35,23 @@
 // Sebastiano Vigna, available at
 // http://xoroshiro.di.unimi.it/xoroshiro128plus.c.
 
-
 namespace {
 	// Rotates x left by k bits.
 	uint64_t rotl(uint64_t x, unsigned k ) {
 		return (x << k) | (x >> (64 - k));
 	}
 }
+
+
+RandXoroshiro128Plus::RandXoroshiro128Plus() {
+	seed(0x537A73BC);
+}
+
+
+RandXoroshiro128Plus::~RandXoroshiro128Plus() {
+	// Nothing here.
+}
+
 
 uint64_t RandXoroshiro128Plus::random() {
 	uint64_t result = state[0] + state[1];
@@ -53,9 +63,11 @@ uint64_t RandXoroshiro128Plus::random() {
 	return result;
 }
 
+
 uint64_t RandXoroshiro128Plus::max_random() {
 	return std::numeric_limits<uint64_t>::max();
 }
+
 
 void RandXoroshiro128Plus::seed(uint64_t p_seed) {
 	// Use a SplitMix64 RNG to generate two seed values from `p_seed`
@@ -65,14 +77,7 @@ void RandXoroshiro128Plus::seed(uint64_t p_seed) {
 	state[1] = rng.random();
 }
 
+
 void RandXoroshiro128Plus::_bind_methods() {
 	// All exported methods are declared in the superclass.
-}
-
-RandXoroshiro128Plus::RandXoroshiro128Plus() {
-	seed(0x537A73BC);
-}
-
-RandXoroshiro128Plus::~RandXoroshiro128Plus() {
-	// Nothing here.
 }

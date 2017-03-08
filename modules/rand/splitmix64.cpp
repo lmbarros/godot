@@ -33,6 +33,17 @@
 // This is just an adaptation of the public domain code by Sebastiano Vigna,
 // available at http://xoroshiro.di.unimi.it/splitmix64.c.
 
+RandSplitMix64::RandSplitMix64()
+	: state(0x7A3B10CF23) {
+	// Nothing here.
+}
+
+
+RandSplitMix64::~RandSplitMix64() {
+	// Nothing here.
+}
+
+
 uint64_t RandSplitMix64::random() {
 	state += 0x9E3779B97F4A7C15;
 	uint64_t z = state;
@@ -41,23 +52,17 @@ uint64_t RandSplitMix64::random() {
 	return z ^ (z >> 31);
 }
 
+
 uint64_t RandSplitMix64::max_random() {
 	return std::numeric_limits<uint64_t>::max();
 }
+
 
 void RandSplitMix64::seed(uint64_t p_seed) {
 	state = p_seed;
 }
 
+
 void RandSplitMix64::_bind_methods() {
 	// All exported methods are declared in the superclass.
-}
-
-RandSplitMix64::RandSplitMix64()
-	: state(0x7A3B10CF23) {
-	// Nothing here.
-}
-
-RandSplitMix64::~RandSplitMix64() {
-	// Nothing here.
 }
