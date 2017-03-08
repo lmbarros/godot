@@ -71,16 +71,19 @@ uint64_t RandPCG32::max_random() {
 
 
 void RandPCG32::seed(uint64_t p_seed) {
-	const uint64_t seq = 0x6d1f1ce5ca5cadedULL;
-
-	state = 0U;
-	inc = (seq << 1u) | 1u;
-	random();
-	state += p_seed;
-	random();
+	seed_2(p_seed, 0x6d1f1ce5ca5cadedULL);
 }
 
 
+// PCG-specific seeding, just in case someone wants to use it.
+void RandPCG32::seed_2(uint64_t p_state, uint64_t p_seq) {
+	state = 0U;
+    inc = (p_seq << 1u) | 1u;
+    random();
+    state += p_state;
+	random();
+}
+
 void RandPCG32::_bind_methods() {
-	// All exported methods are declared in the superclass.
+	ClassDB::bind_method(D_METHOD("seed_2", "state", "seq"), &RandPCG32::seed_2);
 }

@@ -40,6 +40,7 @@ public:
 	virtual uint64_t random();
 	virtual uint64_t max_random();
 	virtual void seed(uint64_t seed);
+	void seed_2(uint64_t p_state, uint64_t p_seq);
 
 protected:
 	static void _bind_methods();
